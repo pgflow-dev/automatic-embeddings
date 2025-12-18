@@ -1,0 +1,13 @@
+# Supabase
+supabase/functions/.env
+supabase/.branches
+supabase/.temp
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
