@@ -1,4 +1,4 @@
-import { Flow } from 'npm:@pgflow/dsl/supabase';
+import { Flow } from 'npm:@pgflow/dsl@0.12.0/supabase';
 import { splitChunks } from '../tasks/splitChunks.ts';
 import { generateEmbedding } from '../tasks/generateEmbedding.ts';
 import { saveChunks } from '../tasks/saveChunks.ts';
@@ -9,14 +9,15 @@ type Input = {
 };
 
 export const GenerateEmbeddings = new Flow<Input>({ slug: 'generateEmbeddings' })
-  .array({ slug: 'chunks' }, (input) => splitChunks(input.run.content))
+  .array({ slug: 'chunks' }, (flowInput) => splitChunks(flowInput.content))
   .map({ slug: 'embeddings', array: 'chunks' }, (chunk) =>
     generateEmbedding(chunk)
   )
-  .step({ slug: 'save', dependsOn: ['chunks', 'embeddings'] }, (input, context) =>
-    saveChunks({
-      documentId: input.run.documentId,
-      chunks: input.chunks,
-      embeddings: input.embeddings,
-    }, context.supabase)
-  );
+  .step({ slug: 'save', dependsOn: ['chunks', 'embeddings'] }, async (deps, ctx) => {
+    const flowInput = await ctx.flowInput;
+    return saveChunks({
+      documentId: flowInput.documentId,
+      chunks: deps.chunks,
+      embeddings: deps.embeddings,
+    }, ctx.supabase);
+  });

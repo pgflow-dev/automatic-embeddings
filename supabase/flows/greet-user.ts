@@ -1,4 +1,4 @@
-import { Flow } from '@pgflow/dsl';
+import { Flow } from 'npm:@pgflow/dsl@0.12.0';
 
 type Input = {
   firstName: string;
@@ -10,9 +10,9 @@ export const GreetUser = new Flow<Input>({
 })
   .step(
     { slug: 'fullName' },
-    (input) => `${input.run.firstName} ${input.run.lastName}`
+    (flowInput) => `${flowInput.firstName} ${flowInput.lastName}`
   )
   .step(
     { slug: 'greeting', dependsOn: ['fullName'] },
-    (input) => `Hello, ${input.fullName}!`
+    (deps) => `Hello, ${deps.fullName}!`
   );

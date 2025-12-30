@@ -4,6 +4,8 @@ Generate vector embeddings automatically when documents are inserted using datab
 
 Check [Full Tutorial](https://pgflow.dev/tutorials/rag/automatic-embeddings/) or [pgflow Documentation](https://pgflow.dev)
 
+**This repository uses pgflow 0.12.0** - migrations and code are pinned to this version. See [Update pgflow](https://pgflow.dev/deploy/update-pgflow/) for upgrading to newer versions.
+
 ## What This Demonstrates
 
 - Database triggers starting pgflow workflows on INSERT
@@ -122,3 +124,7 @@ supabase/
 
 - [Full Tutorial](https://pgflow.dev/tutorials/rag/automatic-embeddings/)
 - [pgflow Documentation](https://pgflow.dev)
+
+---
+
+**Note:** This repo was updated for [pgflow 0.12.0](https://pgflow.dev/news/pgflow-0-12-0-simpler-handler-signatures-for-flow-composition/) which changed handler signatures. For the pre-0.12.0 version, see [commit 0583cfd](https://github.com/pgflow-dev/automatic-embeddings/tree/0583cfd).
