@@ -7,7 +7,7 @@ export async function saveChunks(
     embeddings: number[][];
   },
   supabase: SupabaseClient
-) {
+): Promise<number[]> {
   const rows = input.chunks.map((content, i) => ({
     document_id: input.documentId,
     content,
@@ -17,8 +17,8 @@ export async function saveChunks(
   const { data } = await supabase
     .from('document_chunks')
     .insert(rows)
-    .select()
+    .select('id')
     .throwOnError();
 
-  return data;
+  return data.map((row) => row.id);
 }
